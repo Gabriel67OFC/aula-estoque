@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+.root{
+    -fx-font-family: "Roboto Condensed", Arial, sans-serif;
+    -fx-background-color :  #EFFFD6;
+    -fx-text-fill: #4b793f;
+}
+
+.meu-painel {
+    -fx-background-color: linear-gradient(to bottom, #777CD9, #F2E1D8);
+}
+
+.campos-login{
+    -fx-border-color: #4b793f;
+    -fx-border-radius: 7;
+    -fx-background-radius : 7;
+    -fx-border-width: 2;
+    -fx-text-fill: #4b793f;
+    -fx-prompt-text-fill :  #99bc8b;
+    -fx-font-size: 20;
+}
+
+.botao{
+    -fx-background-color : #4b793f;
+    -fx-background-radius :  10;
+    -fx-text-fill: #efffd6;
+    -fx-font-size: 16;
+
+
+}
+
+.botao:hover{
+
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-cursor: hand;
+}
+.menu{
+    -fx-background-color : #4b793f;
+}
+.titulo{
+    -fx-text-fill :  #efffd6;
+    -fx-font-family: "Roboto Condensed";
+    -fx-padding: 10 0 10 10 ;
+}
+
+.botao-menu{
+    -fx-background-color :  transparent;
+}
+
+.botao-menu:hover{
+    -fx-background-color: #4b793f ;
+    -fx-opacity: 1.5;
+   -fx-effect: dropshadow(gaussian, #efffd6, 5, 0.5,0,0);
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.texto-principal {
+    -fx-text-fill: #4b793f;
+    -fx-font-family: "Roboto Condensed";
+}
+
+.texto-secundario{
+    -fx-text-fill: #4b793f;
+    -fx-font-family: "Roboto Condensed";
+    -fx-opacity: 0.5;
+}
+
+
+.titulo-recuperacao{
+    -fx-text-fill: #4b793f;
+    -fx-font-size: 22;
+    -fx-font-weight: 700;
+
+}
+
+.texto-erro{
+    -fx-text-fill: rgb(198,3,3);
+    -fx-font-size: 14;
+    -fx-font-style: italic;
+}
+
+.texto-email-recuperacao{
+    -fx-text-fill: #4b793f;
+    -fx-font-family: "Roboto Condensed";
+    -fx-opacity: 0.7;
+    -fx-font-size: 15;
+
+}
+
+.codigo-gerado{
+    -fx-text-fill : #efffd6;
+}
+
+.codigo-gerado:hover{
+    -fx-text-fill : #99bc8b;
+}
+
+.btn-prod{
+    -fx-background-color: #4b793f;
+}
+
+.btn-remover{
+    -fx-background-color: #860202FF;
+}
+
+.table .column-header{
+    -fx-background-color: #91d585;
+    -fx-text-fill: #99bc8b;
+
+    -fx-background-radius: 20 0 20 0;
+
+}
+
+.links:hover{
+    -fx-text-fill: #777CD9;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-cursor: hand;
+}
