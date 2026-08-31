@@ -70,4 +70,7 @@ public class Produto {
                 " Quantidade: " + this.quantidade +
                 " Preço: " + this.preco;
     }
+
+    public void setID(int id) {
+    }
 }

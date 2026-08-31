@@ -35,13 +35,12 @@ public class LoginController {
 
     private boolean senhaVisivelAtiva = false;
 
-    private final UsuarioDAO bdUsuario =  UsuarioDAO.getInstancia();
+    private final UsuarioDAO bdUsuario = new UsuarioDAO();
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         senhaVisivel.textProperty().bindBidirectional(senha.textProperty());
     }
-
 
     @FXML
     protected void aoAcessarConta(ActionEvent event) throws IOException {
@@ -49,10 +48,9 @@ public class LoginController {
         String usuarioDigitado = usuario.getText().toLowerCase();
         String senhaDigitada = senha.getText();
 
-        Optional<Usuario> usuarioEncontrado = bdUsuario.buscarPorEmail(usuarioDigitado);
+        boolean loginValidado = bdUsuario.validarLogin(usuarioDigitado,senhaDigitada);
 
-        if ( usuarioEncontrado.isPresent() && usuarioEncontrado.get().getSenha().equals(senhaDigitada)){
-
+        if (loginValidado) {
             GerenciadorTela.getInstancia().trocarTela(event, "menu.fxml", "Sistema de Estoque - Menu");
 
         } else {
@@ -62,7 +60,7 @@ public class LoginController {
 
 
     @FXML
-    protected void aoVerSenha(){
+    protected void aoVerSenha() {
         senhaVisivelAtiva = !senhaVisivelAtiva;
 
         senha.setVisible(!senhaVisivelAtiva);
@@ -71,7 +69,7 @@ public class LoginController {
         senhaVisivel.setVisible(senhaVisivelAtiva);
         senhaVisivel.setManaged(senhaVisivelAtiva);
 
-        iconeOlho.setIconLiteral(senhaVisivelAtiva ?  "mdi2e-eye" : "mdi2e-eye-off");
+        iconeOlho.setIconLiteral(senhaVisivelAtiva ? "mdi2e-eye" : "mdi2e-eye-off");
     }
 
 
@@ -82,7 +80,7 @@ public class LoginController {
 
 
     @FXML
-    protected  void aoEsquecerSenha() throws IOException {
+    protected void aoEsquecerSenha() throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/joao/estoque/enviaEmail.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -91,7 +89,6 @@ public class LoginController {
         stage.setTitle("Sistema de Estoque - Esqueceu a senha");
         stage.show();
     }
-
 
 
 }

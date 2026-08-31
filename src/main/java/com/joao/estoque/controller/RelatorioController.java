@@ -1,5 +1,10 @@
 package com.joao.estoque.controller;
 
+import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.util.Locale;
+
+
 import com.joao.estoque.model.EstoqueDAO;
 import com.joao.estoque.util.GerenciadorTela;
 import javafx.event.ActionEvent;
@@ -7,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -28,14 +34,24 @@ public class RelatorioController {
 
         NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 
-        int totalProdutos = dadosEstoque.listarProdutos().size();
-        lblTotalProdutos.setText(String.valueOf(totalProdutos));
+        try {
 
-        double valorTotalEstoque = dadosEstoque.calcularValorTotalEstoque();
-        lblValorTotal.setText(formatoMoeda.format(valorTotalEstoque));
+            int totalProdutos = dadosEstoque.listarProdutos().size();
+            lblTotalProdutos.setText(String.valueOf(totalProdutos));
 
-        long estoqueBaixo = dadosEstoque.calcularEstoqueBaixo(10);
-        lblEstoqueBaixo.setText(String.valueOf(estoqueBaixo));
+            double valorTotalEstoque = dadosEstoque.calcularValorTotalEstoque();
+            lblValorTotal.setText(formatoMoeda.format(valorTotalEstoque));
+
+            long estoqueBaixo = dadosEstoque.calcularEstoqueBaixo(10);
+            lblEstoqueBaixo.setText(String.valueOf(estoqueBaixo));
+
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+
+            lblTotalProdutos.setText("Erro");
+            lblValorTotal.setText("Erro");
+            lblEstoqueBaixo.setText("Erro");
+        }
 
 
         // Conversao de tipos

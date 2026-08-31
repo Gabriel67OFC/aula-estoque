@@ -80,7 +80,6 @@ public class ProdutoController {
             produtoEmEdicao.setPreco(preco);
             mostrarSucesso(event, "Produto editado com sucesso!");
         }
-        dadosEstoque.listarProdutos().forEach(System.out::println);
     }
 
     private void mostrarErro(String mensagem) {
