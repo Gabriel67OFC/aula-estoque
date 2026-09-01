@@ -12,27 +12,22 @@ import java.util.Optional;
 import java.util.Set;
 
 public class UsuarioDAO {
-
-    private Set<Usuario> bdUsuario;
-
     public UsuarioDAO(){
-        bdUsuario = new HashSet<>();
     }
 
     public boolean validarLogin(String email, String senha){
 
         Optional<Usuario> usuarioEncontrado = buscarPorEmail(email);
 
-        if (usuarioEncontrado.isEmpty()) return false;
+        if(usuarioEncontrado.isEmpty()) return false;
 
         return BCrypt.checkpw(senha, usuarioEncontrado.get().getSenha());
     }
 
+    public Optional<Usuario> buscarPorEmail(String email){
+        String sqlSelect = "SELECT * FROM cliente WHERE email = ? ";
 
-    public Optional<Usuario> buscarPorEmail(String email) {
-        String sqlSelect = "SELECT * FROM usuario WHERE email = ?";
-
-        try (Connection con = ConexaoDB.getConexao(); PreparedStatement pstm = con.prepareStatement(sqlSelect)){
+        try ( Connection con = ConexaoDB.getConexao(); PreparedStatement pstm = con.prepareStatement(sqlSelect)){
             pstm.setString(1, email);
             try (ResultSet rs = pstm.executeQuery()){
                 if(rs.next()){
@@ -43,44 +38,41 @@ public class UsuarioDAO {
                     return Optional.of(usuario);
                 }
             }
-
-        }catch (SQLException ex){
-            System.err.println("[BANCO DE DADOS] ERRO ao buscar usuario por email!" + ex.getMessage());
+        } catch (SQLException ex){
+            System.err.println("[BANCO DE DADOS] ERRO ao buscar usuario por email! " + ex.getMessage());
             ex.printStackTrace();
         }
-        return Optional.empty();
+        return  Optional.empty();
     }
+
     public void cadastrarUsuario(Usuario usuario){
-        String sqlInsert = "INSERT INT usuario (usuario, senha) VALUES (?,?)";
+        String sqlInsert = "INSERT INTO cliente (email, senha) VALUES (?,?)";
 
         String senhaCriptografada = BCrypt.hashpw(usuario.getSenha(), BCrypt.gensalt());
 
-        try (Connection con = ConexaoDB.getConexao(); PreparedStatement pstm = con.prepareStatement(sqlInsert)){
+        try(Connection con = ConexaoDB.getConexao(); PreparedStatement pstm = con.prepareStatement(sqlInsert)){
             pstm.setString(1, usuario.getEmail());
             pstm.setString(2, senhaCriptografada);
             pstm.execute();
 
-
-        }catch (SQLException ex){
-            System.err.println("[BANCO DE DADOS] ERRO ao inserir novo usuário" + ex.getMessage());
+        } catch (SQLException ex){
+            System.err.println("[BANCO DE DADOS] ERRO ao inserir novo usuário! " + ex.getMessage());
             ex.printStackTrace();
         }
-
     }
 
-
     public void atualizarSenha(int id, String novaSenha){
-        String sqlUpdate = "UPDATE usuario SET senha=? WHERE id=?";
+        String sqlUpdate = "UPDATE cliente SET senha=? WHERE id=?";
 
         String senhaCriptografada = BCrypt.hashpw(novaSenha, BCrypt.gensalt());
-        try ( Connection con = ConexaoDB.getConexao(); PreparedStatement pstm = con.prepareStatement(sqlUpdate)) {
+        try( Connection con = ConexaoDB.getConexao(); PreparedStatement pstm = con.prepareStatement(sqlUpdate)){
             pstm.setString(1, senhaCriptografada);
             pstm.setInt(2, id);
             pstm.executeUpdate();
-        }catch (SQLException ex){
+        } catch (SQLException ex){
             System.err.println("[BANCO DE DADOS] ERRO ao atualizar senha! " + ex.getMessage());
             ex.printStackTrace();
         }
-
     }
+
 }

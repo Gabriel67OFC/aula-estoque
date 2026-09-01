@@ -53,13 +53,14 @@ public class CadastroController {
             senhaInvalida.setVisible(true);
             return;
         }
+        Usuario novoUsuario =  new Usuario(usuario, senha);
 
         String senhaConfirmacao = confirmaSenha.getText();
         if(!senhaConfirmacao.equals(senha)){
             erroSenha.setVisible(true);
             return;
         }
-        Usuario novoUsuario =  new Usuario(usuario, senha);
+
         dbUsuario.cadastrarUsuario(novoUsuario);
 
         GerenciadorTela.getInstancia().trocarTela(event, "login.fxml", "Sistema de Estoque - Login");
